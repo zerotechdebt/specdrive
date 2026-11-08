@@ -75,7 +75,7 @@ just build          # tsc → dist/
 just release X.Y.Z  # bump, tag vX.Y.Z, push; GitHub Actions publishes to npm
 ```
 
-CI (`.github/workflows/ci.yml`) runs checks on Node 20/22/24 for pushes to main and PRs. `release.yml` publishes on `v*.*.*` tags via npm trusted publishing (OIDC, no token) and creates a GitHub release from the CHANGELOG section. See CONTRIBUTING.md.
+CI (`.github/workflows/ci.yml`) runs checks on Node 22/24 for pushes to main and PRs. `release.yml` publishes on `v*.*.*` tags via npm trusted publishing (OIDC, no token) and creates a GitHub release from the CHANGELOG section. See CONTRIBUTING.md.
 
 ## File Layout (consumer-side)
 
