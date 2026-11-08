@@ -5,7 +5,7 @@ Thank you for your interest in contributing to specdrive!
 ## Development Setup
 
 ```bash
-git clone https://github.com/bryonjacob/specdrive.git
+git clone https://github.com/zerotechdebt/specdrive.git
 cd specdrive
 pnpm install
 ```

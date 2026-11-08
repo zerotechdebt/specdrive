@@ -1,6 +1,6 @@
 {
   "name": "specdrive",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "description": "Spec package manager for Gherkin behavioral contracts",
   "bin": {
@@ -50,11 +50,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bryonjacob/specdrive.git"
+    "url": "https://github.com/zerotechdebt/specdrive.git"
   },
-  "homepage": "https://github.com/bryonjacob/specdrive",
+  "homepage": "https://github.com/zerotechdebt/specdrive",
   "bugs": {
-    "url": "https://github.com/bryonjacob/specdrive/issues"
+    "url": "https://github.com/zerotechdebt/specdrive/issues"
   },
   "engines": {
     "node": ">=18"

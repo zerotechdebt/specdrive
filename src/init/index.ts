@@ -7,7 +7,7 @@ import { JUNIT_XML_SPEC } from './adapters/generic.js'
 import type { Adapter, AdapterFile, ConfigEdit } from './types.js'
 
 const SPECDRIVE_YAML_TEMPLATE = `# specdrive.yaml — Gherkin behavioral contract configuration
-# Docs: https://github.com/bryonjacob/specdrive
+# Docs: https://github.com/zerotechdebt/specdrive
 
 # Local spec directories (relative to project root)
 localSpecs:
