@@ -83,3 +83,14 @@ check-all: format lint typecheck coverage
 # Remove generated files and artifacts
 clean:
     rm -rf node_modules dist coverage .vitest
+
+# Cut a release: bump version, commit, tag vX.Y.Z, push (CI publishes to npm)
+release version:
+    @test -z "$(git status --porcelain)" || (echo "Working tree not clean; commit the CHANGELOG entry first" && exit 1)
+    @test "$(git branch --show-current)" = main || (echo "Releases are cut from main" && exit 1)
+    @scripts/changelog-section.sh {{version}} > /dev/null
+    just check-all
+    npm version {{version}} --no-git-tag-version
+    git commit -am "chore: release {{version}}"
+    git tag -a v{{version}} -m "v{{version}}"
+    git push origin main v{{version}}

@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Spec package manager for Gherkin behavioral contracts",
   "bin": {
-    "specdrive": "./dist/index.js"
+    "specdrive": "dist/index.js"
   },
   "files": [
     "dist"
@@ -18,7 +18,8 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --fix",
     "coverage": "vitest run tests/unit --coverage --coverage.lines=96",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build",
+    "lint:check": "eslint ."
   },
   "dependencies": {
     "yaml": "^2.7.0"
@@ -50,7 +51,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zerotechdebt/specdrive.git"
+    "url": "git+https://github.com/zerotechdebt/specdrive.git"
   },
   "homepage": "https://github.com/zerotechdebt/specdrive",
   "bugs": {

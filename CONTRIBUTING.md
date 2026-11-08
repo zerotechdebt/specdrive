@@ -63,3 +63,17 @@ Please open an issue on GitHub with:
 - What actually happened
 - Steps to reproduce
 - Your Node.js version and OS
+
+## Releasing
+
+Releases are published to npm by GitHub Actions when a `vX.Y.Z` tag is pushed
+(`.github/workflows/release.yml`). The workflow checks that the tag matches
+`package.json`, runs all checks, publishes with npm provenance via trusted
+publishing (no npm token is stored), and creates a GitHub release from the
+matching `CHANGELOG.md` section.
+
+To cut a release from a clean `main`:
+
+1. Add a `## [X.Y.Z] - YYYY-MM-DD` section to `CHANGELOG.md` and commit it.
+2. Run `just release X.Y.Z`. This runs the checks, bumps `package.json`,
+   commits, tags `vX.Y.Z`, and pushes the commit and tag.

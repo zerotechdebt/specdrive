@@ -1,0 +1,51 @@
+name: Release
+
+# Push a tag like v0.2.3 to publish that version to npm and create a GitHub release.
+# The tag must match the version in package.json, and CHANGELOG.md must have an entry for it.
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write # create the GitHub release
+  id-token: write # npm trusted publishing (OIDC) and provenance
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Check tag matches package.json and CHANGELOG
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$version" != "$pkg" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $pkg"
+            exit 1
+          fi
+          scripts/changelog-section.sh "$version" > release-notes.md
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run format:check
+      - run: pnpm run lint:check
+      - run: pnpm run typecheck
+      - run: pnpm run coverage
+
+      # Trusted publishing needs npm 11.5.1 or newer; no NPM_TOKEN secret is used.
+      - run: npm install -g npm@latest
+      - run: npm publish --provenance --access public
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file release-notes.md --verify-tag
