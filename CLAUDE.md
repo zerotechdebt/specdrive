@@ -72,12 +72,16 @@ just dev-install    # pnpm install
 just check-all      # format, lint, typecheck, coverage
 just test           # unit tests only (122 tests)
 just build          # tsc → dist/
-just release X.Y.Z  # bump, tag vX.Y.Z, push; GitHub Actions publishes to npm
 ```
 
-CI (`.github/workflows/ci.yml`) runs checks on Node 22/24 for pushes to main and PRs. `release.yml` publishes on `v*.*.*` tags via npm trusted publishing (OIDC, no token) and creates a GitHub release from the CHANGELOG section. See CONTRIBUTING.md.
+## CI and Releases
 
-Releases: commit a `## [X.Y.Z] - YYYY-MM-DD` CHANGELOG entry on a clean `main`, then `just release X.Y.Z`. Never `npm publish` by hand. If the Release run fails before publishing, fix the cause and `gh run rerun <id> --failed`; re-tag only if the fix changes files in the repo (delete the tag, push the fix, tag again).
+CI (`.github/workflows/ci.yml`) runs all checks on Node 22 and 24 for every push to `main` and every PR. Releases are published by `.github/workflows/release.yml` when a `vX.Y.Z` tag is pushed: it checks the tag matches `package.json`, runs all checks, publishes to npm via trusted publishing (no token, with provenance), and creates a GitHub release from the CHANGELOG section.
+
+1. On a clean `main`, commit a `## [X.Y.Z] - YYYY-MM-DD` entry in `CHANGELOG.md`.
+2. Run `just release X.Y.Z` (checks, bumps `package.json`, commits, tags, pushes).
+
+Never `npm publish` by hand. If the Release run fails before publishing, fix the cause and `gh run rerun <id> --failed`. If the fix changes repo files, delete the tag, push the fix, and tag again. A 403 "OIDC permission denied" means the npm trusted-publisher entry needs "npm publish" ticked under Allowed actions.
 
 ## File Layout (consumer-side)
 
