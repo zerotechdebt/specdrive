@@ -77,6 +77,8 @@ just release X.Y.Z  # bump, tag vX.Y.Z, push; GitHub Actions publishes to npm
 
 CI (`.github/workflows/ci.yml`) runs checks on Node 22/24 for pushes to main and PRs. `release.yml` publishes on `v*.*.*` tags via npm trusted publishing (OIDC, no token) and creates a GitHub release from the CHANGELOG section. See CONTRIBUTING.md.
 
+Releases: commit a `## [X.Y.Z] - YYYY-MM-DD` CHANGELOG entry on a clean `main`, then `just release X.Y.Z`. Never `npm publish` by hand. If the Release run fails before publishing, fix the cause and `gh run rerun <id> --failed`; re-tag only if the fix changes files in the repo (delete the tag, push the fix, tag again).
+
 ## File Layout (consumer-side)
 
 ```
